@@ -1,0 +1,141 @@
+#include <iostream>
+#include <random>
+
+#include <stdlib.h> // para obtener números aleatorios
+#include <time.h> // para usar la función time
+
+using namespace std;
+
+// Implementar Primero en llegar primero en atenderse
+
+class Cliente {
+  private:
+    int tiempo;
+  public:
+    setTiempo(); // recorrer array/lista y asignar aleatoriamente la atencion entre 3 y 15 minutos. Uno representa un minuto.
+    int getTiempo() { return tiempo; };
+};
+
+Cliente::setTiempo()
+{
+  tiempo = (3 + rand() % (15 - 3));
+}
+
+class Cola {
+  private:
+    int n;
+    int tiempo;
+    Cliente *ptr;
+    int tipoCola;
+  public:
+    //Cola(int _n) (n):_n { tiempo = 0; ptr = new Cliente[n];};
+    Cola(int _n):n(_n) { tiempo = 0; ptr = new Cliente[n];};
+    getTamanio();
+    int getCliente(); // obtiene el primer cliente y lo retira de la cola.
+    bool isEmpty(); // verifica si esta vacia la cola.
+    void setTipoCola(int _tipo) { tipoCola=_tipo;}
+};
+
+class Cajero {
+  private:
+    int id;
+    int tipo;
+    int tiempo;
+  public:
+    getTipo(); // Devuelve que tipo de Cajero es para saber si atiende a cualquier cola.
+    void setTiempo(int tiempo);
+    int atender(); // resta un minuto de atencion.
+    bool estaLibre(); // Devuelve true si ya no esta ocupado.
+};
+
+class Banco {
+  private:
+    string nombre;
+    int numcajeros;
+    Cajero *cajeros;
+    Cola *cola;
+  public:
+    //Banco(int _numcajeros, string _nombre):numcajeros(_numcajeros), nombre(_nombre){};
+    Banco(int _numcajeros):numcajeros(_numcajeros){};
+    int simularAtencion(); // simula proceso de atencion. En un bucle recorrer los cajeros y restar un minuto de atenncion por cada cajero.
+    void setCliente( Cliente _cliente);
+};
+
+int Menu() {
+  int opcion;
+  cout << "" << endl;
+  cout << "ATENCION A CLIENTES EN VENTANILLA" << endl;
+  cout << "=================================" << endl;
+  cout << "" << endl;
+  cout << "1. Establecer numero de clientes" << endl;
+  cout << "2. Establecer numero de cajeros" << endl;
+  cout << "3. Asignar tiempo aleatorio a los clientes" << endl;
+  cout << "4. Asignar aleatoriamente los clientes a la cola" << endl;
+  cout << "5. Mostrar el tiempo de ejecución" << endl;
+  cout << "6. Salir" << endl;
+  cout << "" << endl;
+  cout << "   INTRODUZCA UNA OPCIÓN (1-6): ";
+  cin >> opcion;
+  return opcion;
+};
+
+Cliente *Clientes[10];
+
+void Generando_Mis_Clientes()
+{
+  system("cls");
+  char tecla;
+  srand(time(NULL));
+  cout << endl;
+  cout << "-------------------------------------------------------" << endl;
+  cout << "LA RECEPCIONISTA Y EL GUARDIA DE SEGURIDAD ABREN PUERTA" << endl;
+  cout << "Y SOLICITAN  INFORMACION A LOS CLIENTES PARA DETERMINAR" << endl;
+  cout << "EL TIEMPO  APROXIMADO QUE DEMANDARA LA ATENCION DE CADA" << endl;
+  cout << "UNO DE ELLOS:" << endl;
+  cout << "-------------------------------------------------------" << endl;
+  for (int i = 0; i < 10; i++)
+  {
+    Clientes[i] = new Cliente();
+    Clientes[i]->setTiempo();
+    cout << "Cliente # " << i << " necesitara un tiempo aproximado de " << Clientes[i]->getTiempo() << " min." << endl;
+  }
+  cout << "-------------------------------------------------------" << endl;
+  cout << endl;
+  cout << "Presione tecla para continuar...";
+  cin >> tecla;
+}
+
+int main()
+{
+  //Cola *enCola;
+  int opcion = 0;
+  while (opcion != 6)
+  {
+    system("cls");
+    opcion = Menu();
+    switch (opcion) {
+      case 1:
+        Generando_Mis_Clientes();
+        break;
+      case 2:
+        //Banco *Entidad;
+        //Entidad = new Banco(5);
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      default:
+        cout << "" << endl;
+        cout << "OPCION NO VALIDA, INTENTE DE NUEVO..." << endl;
+        cout << "" << endl;
+        system("pause");
+    }
+  };
+
+  return 0;
+}
